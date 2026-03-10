@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC IPM BERBAH - Login</title>
+    <link rel="icon" type="image/x-icon" href="ipmlogo.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #8B0000 0%, #006400 70%, #FFD700 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Overlay pattern */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(139, 0, 0, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 30% 70%, rgba(0, 100, 0, 0.1) 0%, transparent 30%);
+            pointer-events: none;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 40px;
+            padding: 40px 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border: 3px solid #FFD700;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #8B0000, #006400, #FFD700);
+        }
+
+        .welcome-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #8B0000 0%, #006400 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.4);
+            border: 3px solid #FFD700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo span {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 0 rgba(255, 215, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 22px;
+            font-weight: 600;
+            color: #006400;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #4a5568;
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #8B0000, #FFD700, #006400, transparent);
+            margin: 25px 0;
+            border-radius: 3px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 16px 20px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8B0000 0%, #B22222 100%);
+            color: white;
+            border: 2px solid #FFD700;
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(139, 0, 0, 0.5);
+            border-color: #006400;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .quick-card {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.05) 0%, rgba(0, 100, 0, 0.05) 100%);
+            border-radius: 20px;
+            padding: 20px 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            backdrop-filter: blur(5px);
+        }
+
+        .quick-card:hover {
+            transform: translateY(-5px);
+            border-color: #8B0000;
+            background: white;
+            box-shadow: 0 15px 30px rgba(139, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #006400;
+        }
+
+        .card-title {
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .card-desc {
+            color: #006400;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+            border: 3px solid #FFD700;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .modal-icon {
+            font-size: 40px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #8B0000;
+        }
+
+        .modal-body {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            min-height: 100px;
+        }
+
+        .modal-close {
+            background: linear-gradient(135deg, #8B0000 0%, #006400 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            border: 2px solid #FFD700;
+        }
+
+        .modal-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: white;
+            text-align: center;
+            font-size: 12px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .footer .highlight {
+            color: #FFD700;
+            font-weight: 700;
+            background: rgba(139, 0, 0, 0.5);
+            padding: 3px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            backdrop-filter: blur(5px);
+            border: 1px solid #FFD700;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.03) 0%, rgba(0, 100, 0, 0.03) 100%);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transform: translateX(0);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .contact-item:hover {
+            background: white;
+            border-color: #8B0000;
+            transform: translateX(8px);
+            box-shadow: 0 10px 25px rgba(139, 0, 0, 0.15);
+        }
+
+        .contact-item:active {
+            transform: scale(0.98) translateX(5px);
+        }
+
+        .contact-icon {
+            font-size: 28px;
+            min-width: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-weight: 600;
+            color: #8B0000;
+            margin-bottom: 3px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item:hover .contact-label {
+            color: #006400;
+        }
+
+        .contact-value {
+            color: #006400;
+            font-size: 14px;
+            word-break: break-word;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-value {
+            color: #333;
+            transform: translateX(3px);
+        }
+
+        .contact-note {
+            font-size: 11px;
+            color: #999;
+            margin-top: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover .contact-note {
+            color: #8B0000;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .welcome-card {
+                padding: 30px 20px;
+            }
+            
+            .quick-grid {
+                gap: 10px;
+            }
+            
+            .quick-card {
+                padding: 15px 10px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="welcome-card">
+            <div class="logo">
+                <span>IPM</span>
+            </div>
+
+            <h1>PC IPM BERBAH</h1>
+            <div class="subtitle">Selamat Datang!</div>
+            <div class="description">
+                Portal resmi PC IPM Berbah - Maju bersama, berkarya untuk semua
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="button-container">
+                <button class="btn btn-primary" onclick="loginAsUser()">
+                    <span>🔑</span> Intip Web PC IPM Berbah Kami
+                </button>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="quick-grid">
+                <div class="quick-card" onclick="showModal('pengumuman')">
+                    <div class="card-icon">📢</div>
+                    <div class="card-title">Pengumuman</div>
+                    <div class="card-desc">Info terbaru</div>
+                </div>
+
+                <div class="quick-card" onclick="showModal('kegiatan')">
+                    <div class="card-icon">📅</div>
+                    <div class="card-title">Kegiatan</div>
+                    <div class="card-desc">Jadwal event</div>
+                </div>
+
+                <div class="quick-card" onclick="showModal('galeri')">
+                    <div class="card-icon">🖼️</div>
+                    <div class="card-title">Galeri</div>
+                    <div class="card-desc">Foto kegiatan</div>
+                </div>
+
+                <div class="quick-card" onclick="showModal('kontak')">
+                    <div class="card-icon">📞</div>
+                    <div class="card-title">Kontak</div>
+                    <div class="card-desc">Hubungi kami</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 PC IPM BERBAH. All Rights Reserved.</p>
+            <p>Projek ini digarap oleh <span class="highlight">bani firza maulana</span></p>
+        </div>
+    </div>
+
+    <div id="modal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="modalIcon" class="modal-icon">📢</span>
+                <h2 id="modalTitle" class="modal-title">Pengumuman</h2>
+            </div>
+            <div id="modalBody" class="modal-body">
+            </div>
+            <button class="modal-close" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+
+    <!-- JavaScript tetap sama seperti file Anda -->
+    <script>
+        // Semua fungsi JavaScript Anda tetap sama
+        function showModal(type) {
+            const modal = document.getElementById('modal');
+            const modalIcon = document.getElementById('modalIcon');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            switch(type) {
+                case 'pengumuman':
+                    modalIcon.textContent = '📢';
+                    modalTitle.textContent = 'Pengumuman';
+                    modalBody.innerHTML = `
+                        <div style="margin-bottom: 15px;">
+                            <strong style="color: #8B0000; display: block; margin-bottom: 10px;">📢 Pengumuman Terbaru:</strong>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                                    <span style="color: #8B0000; font-weight: 600;">18 Mei 2026</span><br>
+                                    Open Recruitment PC IPM Berbah Periode 2026-2028
+                                </li>
+                                <li style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                                    <span style="color: #006400; font-weight: 600;">15 April 2026</span><br>
+                                    Pleno 2
+                                </li>
+                                <li style="margin-bottom: 10px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                                    <span style="color: #FFD700; font-weight: 600;">25 Maret 2026</span><br>
+                                    SERABI#2
+                                </li>
+                            </ul>
+                        </div>
+                        <p style="color: #666; font-style: italic;">Klik "Tutup" untuk kembali</p>
+                    `;
+                    break;
+                    
+                case 'kegiatan':
+                    modalIcon.textContent = '📅';
+                    modalTitle.textContent = 'Kegiatan';
+                    modalBody.innerHTML = `
+                        <div style="margin-bottom: 15px;">
+                            <strong style="color: #006400; display: block; margin-bottom: 10px;">📅 Jadwal Kegiatan:</strong>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+                                    <span style="background: #8B0000; color: white; padding: 3px 8px; border-radius: 5px; font-size: 12px;">Terbaru</span>
+                                </div>
+                                <p><strong>Sabtu, 25 Maret 2025</strong><br>Santunan Panti Asuhan - Pukul 08.00-selesai</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
+                                <p><strong>Minggu, 04 Maret 2025</strong><br>Berbagi Takjil - Pukul 16.30</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
+                                <p><strong>Rabu, 20 April 2025</strong><br>Badminton Berbah Cup - Pukul 10.00</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
+                                <p><strong>Rabu, 14 April 2025</strong><br>Rapat Kerja Cabang - Pukul 09.00</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
+                                <p><strong>Rabu, 28 Mei 2025</strong><br>Rapat Kerja Pimpinan - Pukul 10.00</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
+                                <p><strong>Rabu, 18 Mei 2025</strong><br>Pelantikan PC IPM Berbah - Pukul 08.00</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'galeri':
+                    modalIcon.textContent = '🖼️';
+                    modalTitle.textContent = 'Galeri';
+                    modalBody.innerHTML = `
+                        <div style="margin-bottom: 15px;">
+                            <strong style="color: #8B0000; display: block; margin-bottom: 15px;">🖼️ Dokumentasi Kegiatan:</strong>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                                
+                                <div style="background: #f8f9fa; border-radius: 10px; overflow: hidden;">
+                                    <div style="aspect-ratio: 1; cursor: pointer;" onclick="openImage('images/pcipm1.jpg')">
+                                        <img src="images/pcipm1.jpg" 
+                                             style="width: 100%; height: 100%; object-fit: cover;"
+                                             alt="Pelantikan PC IPM Berbah"
+                                             onerror="this.src='https://via.placeholder.com/200?text=Pelantikan'">
+                                    </div>
+                                    <div style="padding: 8px; text-align: center;">
+                                        <div style="font-weight: 600; font-size: 12px; color: #8B0000;">Pelantikan PC IPM Berbah</div>
+                                        <div style="font-size: 10px; color: #006400;">18 Mei 2025</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="background: #f8f9fa; border-radius: 10px; overflow: hidden;">
+                                    <div style="aspect-ratio: 1; cursor: pointer;" onclick="openImage('images/pcipm2.jpg')">
+                                        <img src="images/pcipm2.jpg" 
+                                             style="width: 100%; height: 100%; object-fit: cover;"
+                                             alt="Santunan Panti Asuhan"
+                                             onerror="this.src='https://via.placeholder.com/200?text=Santunan'">
+                                    </div>
+                                    <div style="padding: 8px; text-align: center;">
+                                        <div style="font-weight: 600; font-size: 12px; color: #8B0000;">Santunan Panti Asuhan</div>
+                                        <div style="font-size: 10px; color: #006400;">25 Maret 2026</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="background: #f8f9fa; border-radius: 10px; overflow: hidden;">
+                                    <div style="aspect-ratio: 1; cursor: pointer;" onclick="openImage('images/pcipm3.jpg')">
+                                        <img src="images/pcipm3.jpg" 
+                                             style="width: 100%; height: 100%; object-fit: cover;"
+                                             alt="Badminton Berbah Cup"
+                                             onerror="this.src='https://via.placeholder.com/200?text=Badminton'">
+                                    </div>
+                                    <div style="padding: 8px; text-align: center;">
+                                        <div style="font-weight: 600; font-size: 12px; color: #8B0000;">Badminton Berbah Cup</div>
+                                        <div style="font-size: 10px; color: #006400;">20 Maret 2026</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="background: #f8f9fa; border-radius: 10px; overflow: hidden;">
+                                    <div style="aspect-ratio: 1; cursor: pointer;" onclick="openImage('images/pcipm4.jpg')">
+                                        <img src="images/pcipm4.jpg" 
+                                             style="width: 100%; height: 100%; object-fit: cover;"
+                                             alt="Pleno 1"
+                                             onerror="this.src='https://via.placeholder.com/200?text=Pleno'">
+                                    </div>
+                                    <div style="padding: 8px; text-align: center;">
+                                        <div style="font-weight: 600; font-size: 12px; color: #8B0000;">Pleno 1</div>
+                                        <div style="font-size: 10px; color: #006400;">25 Maret 2026</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'kontak':
+                    modalIcon.textContent = '📞';
+                    modalTitle.textContent = 'Kontak';
+                    modalBody.innerHTML = `
+                        <div style="margin-bottom: 15px;">
+                            <strong style="color: #8B0000; display: block; margin-bottom: 15px;">📞 Hubungi Kami:</strong>
+                            
+                            <div class="contact-item" onclick="openEmail('pc.ipmberbah@email.com')">
+                                <i class="far fa-envelope contact-icon" style="color: #8B0000;"></i>
+                                <div class="contact-info">
+                                    <div class="contact-label">Email</div>
+                                    <div class="contact-value">pc.ipmberbah@email.com</div>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item" onclick="openWhatsApp('6281225763371')">
+                                <i class="fab fa-whatsapp contact-icon" style="color: #25D366;"></i>
+                                <div class="contact-info">
+                                    <div class="contact-label">WhatsApp</div>
+                                    <div class="contact-value">+62 812-2576-3371</div>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item" onclick="openMaps('Jl. Raya Berbah No. 123, Sleman, Yogyakarta')">
+                                <i class="fas fa-map-marker-alt contact-icon" style="color: #006400;"></i>
+                                <div class="contact-info">
+                                    <div class="contact-label">Alamat</div>
+                                    <div class="contact-value">Berbah, Sleman</div>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item" onclick="openInstagram('pc.ipmberbah')">
+                                <i class="fab fa-instagram contact-icon" style="color: #E4405F;"></i>
+                                <div class="contact-info">
+                                    <div class="contact-label">Instagram</div>
+                                    <div class="contact-value">@pc.ipmberbah</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(event) {
+            const modal = document.getElementById('modal');
+            if (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            } else {
+                modal.style.display = 'none';
+            }
+        }
+
+        function loginAsUser() {
+            const btn = event.currentTarget;
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                btn.style.transform = '';
+                window.location.href = 'index2.html';
+            }, 150);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('modal');
+                modal.style.display = 'none';
+            }
+        });
+
+        document.querySelectorAll('.quick-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#ffffff';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '#f8f9fa';
+            });
+        });
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            if (!toast) {
+                const newToast = document.createElement('div');
+                newToast.id = 'toast';
+                newToast.className = 'toast';
+                newToast.textContent = message;
+                document.body.appendChild(newToast);
+                
+                setTimeout(() => {
+                    newToast.classList.add('show');
+                }, 10);
+                
+                setTimeout(() => {
+                    newToast.classList.remove('show');
+                    setTimeout(() => {
+                        newToast.remove();
+                    }, 300);
+                }, 2000);
+            } else {
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }
+        }
+        
+        function openWhatsApp(phoneNumber) {
+            const cleanNumber = phoneNumber.replace(/[^\d]/g, '');
+            const waUrl = `https://wa.me/${cleanNumber}`;
+            showToast('Membuka WhatsApp...');
+            window.open(waUrl, '_blank');
+        }
+        
+        function openInstagram(username) {
+            const cleanUsername = username.replace('@', '');
+            const igUrl = `https://instagram.com/${cleanUsername}`;
+            showToast('Membuka Instagram...');
+            
+            window.location.href = `instagram://user?username=${cleanUsername}`;
+            
+            setTimeout(function() {
+                window.open(igUrl, '_blank');
+            }, 500);
+        }
+        
+        function openEmail(email) {
+            showToast('Membuka Gmail...');
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`;
+            window.open(gmailUrl, '_blank');
+        }
+        
+        function openMaps(address) {
+            showToast('Membuka Google Maps...');
+            const encodedAddress = encodeURIComponent(address);
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+            
+            window.location.href = `comgooglemaps://?q=${encodedAddress}`;
+            
+            setTimeout(function() {
+                window.open(mapsUrl, '_blank');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
